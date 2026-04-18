@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProductLab with JT — Participant Guide · Edition 01</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Literata:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0D0D0D;
+    --paper: #F7F3EC;
+    --gold: #C9A84C;
+    --gold-light: #F0D898;
+    --rust: #C4502A;
+    --teal: #1A6B6B;
+    --teal-light: #E0F0EE;
+    --slate: #3A3A4A;
+    --muted: #7A7A8A;
+    --border: #D8D0C0;
+    --white: #FFFFFF;
+    --q: #1A6B6B;       /* question — teal */
+    --task: #C4502A;    /* task — rust */
+    --tip: #6B3FA0;     /* tip — purple */
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Literata', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 48px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.18);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 60px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    pointer-events: none;
+  }
+  .hero-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .hero-brand-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .hero-brand-sep { width: 1px; height: 18px; background: rgba(201,168,76,0.35); }
+  .hero-brand-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(247,243,236,0.45);
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(34px, 5.5vw, 68px);
+    font-weight: 800;
+    line-height: 1.06;
+    color: var(--paper);
+    max-width: 820px;
+    margin-bottom: 22px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-family: 'Literata', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: rgba(247,243,236,0.65);
+    max-width: 580px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+    padding-top: 28px;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .hero-meta-item { display: flex; flex-direction: column; gap: 5px; }
+  .hero-meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero-meta-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--paper);
+  }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toc::-webkit-scrollbar { display: none; }
+  .toc a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 15px 18px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .toc a:hover { color: var(--ink); border-bottom-color: var(--gold); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 48px; }
+  .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+
+  /* ── SECTION HEADERS ── */
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-eyebrow::after { content: ''; height: 1px; background: var(--gold-light); width: 60px; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .section-desc {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  /* ── PHASE BLOCK ── */
+  .phase-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .phase-block-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .phase-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .phase-header-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 2px;
+  }
+  .phase-header-text p {
+    font-size: 12px;
+    color: rgba(247,243,236,0.5);
+    font-style: italic;
+  }
+  .phase-block-body { padding: 28px; }
+
+  /* ── CONCEPT BLOCK ── */
+  .concept {
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .concept strong { color: var(--ink); }
+
+  /* ── KEY POINTS ── */
+  .key-points {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .key-points li {
+    font-size: 14.5px;
+    color: var(--slate);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .key-points li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── INTERACTIVE BLOCKS: Q / TASK / TIP ── */
+  .interactive-block {
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .interactive-block .block-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .interactive-block .block-text {
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  /* Question */
+  .block-q { background: rgba(26,107,107,0.07); border-left: 3px solid var(--q); }
+  .block-q .block-icon { background: rgba(26,107,107,0.12); color: var(--q); }
+  .block-q .block-text { color: var(--slate); }
+  .block-q .block-text em { color: var(--q); font-style: normal; font-weight: 600; }
+
+  /* Task */
+  .block-task { background: rgba(196,80,42,0.06); border-left: 3px solid var(--rust); }
+  .block-task .block-icon { background: rgba(196,80,42,0.12); color: var(--rust); }
+  .block-task .block-text { color: var(--slate); }
+  .block-task .block-text strong { color: var(--rust); }
+
+  /* Tip */
+  .block-tip { background: rgba(107,63,160,0.06); border-left: 3px solid var(--tip); }
+  .block-tip .block-icon { background: rgba(107,63,160,0.12); color: var(--tip); }
+  .block-tip .block-text { color: var(--slate); }
+
+  /* ── SPECTRUM ── */
+  .spectrum {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin: 20px 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .spectrum-zone {
+    padding: 16px 18px;
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+  .spectrum-zone-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .spectrum-zone-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .spectrum-zone-tools {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── OCP GRID ── */
+  .ocp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .ocp-card {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.22);
+    border-radius: 4px;
+    padding: 14px 14px;
+  }
+  .ocp-card.special {
+    background: rgba(26,107,107,0.07);
+    border-color: rgba(26,107,107,0.22);
+  }
+  .ocp-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+  .ocp-card.special .ocp-num { color: var(--teal); }
+  .ocp-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .ocp-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── SPARK GRID ── */
+  .spark-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .spark-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .spark-letter {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .spark-content {}
+  .spark-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .spark-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .spark-desc { font-size: 12.5px; color: var(--slate); line-height: 1.5; }
+
+  /* ── TOOL GRID ── */
+  .tool-section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin: 26px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .tool-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+  .tool-card.explore { opacity: 0.65; }
+  .tool-card-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .tool-card-cat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .tool-card-desc { font-size: 12px; color: var(--slate); line-height: 1.5; }
+  .explore-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-top: 5px;
+  }
+
+  /* ── INFRA LAYERS ── */
+  .infra-layers { display: flex; flex-direction: column; gap: 8px; margin: 20px 0; }
+  .infra-layer {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: 28px 130px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .infra-layer-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .infra-layer-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .infra-layer-tools {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── AGENDA ── */
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 16px;
+    padding: 11px 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 14px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .agenda-time { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 11px; }
+  .agenda-label { color: var(--ink); }
+  .agenda-dur { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); white-space: nowrap; text-align: right; }
+  .agenda-row.lab { background: var(--ink); border-color: var(--ink); }
+  .agenda-row.lab .agenda-time { color: var(--gold); }
+  .agenda-row.lab .agenda-label { color: var(--paper); font-weight: 600; }
+  .agenda-row.lab .agenda-dur { color: rgba(247,243,236,0.5); }
+  .agenda-row.brk { background: #f0f0e8; border-color: #d8d0c0; }
+  .agenda-row.brk .agenda-time, .agenda-row.brk .agenda-label, .agenda-row.brk .agenda-dur { color: var(--muted); font-style: italic; }
+
+  /* ── ROLE CARDS ── */
+  .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .role-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; padding: 20px 18px; }
+  .role-card-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 8px; }
+  .role-card-body { font-size: 13.5px; color: var(--slate); line-height: 1.6; }
+
+  /* ── LAB SECTION ── */
+  .labs-section { background: var(--ink); padding: 64px 0; }
+  .labs-section .section-title { color: var(--paper); }
+  .labs-section .section-eyebrow { color: var(--gold); }
+  .labs-section .section-desc { color: rgba(247,243,236,0.5); }
+
+  .lab-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+  }
+  .lab-card-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .lab-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--paper);
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+  .lab-card-tagline {
+    font-style: italic;
+    font-size: 13.5px;
+    color: rgba(247,243,236,0.45);
+    margin-bottom: 28px;
+  }
+  .lab-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 22px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .lab-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 4px;
+  }
+  .lab-list li {
+    font-size: 13.5px;
+    color: rgba(247,243,236,0.78);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .lab-list li::before { content: '›'; position: absolute; left: 0; color: var(--gold); }
+
+  /* Step list inside labs */
+  .step-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    counter-reset: steps;
+    margin-bottom: 4px;
+  }
+  .step-list li {
+    font-size: 13.5px;
+    color: rgba(247,243,236,0.78);
+    padding: 10px 14px 10px 48px;
+    position: relative;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li .step-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 44px;
+    text-align: right;
+  }
+
+  /* Interactive blocks inside labs */
+  .lab-block {
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .lab-block .lb-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .lab-block .lb-text {
+    font-size: 13.5px;
+    color: rgba(247,243,236,0.82);
+    line-height: 1.6;
+  }
+  .lab-block .lb-text strong { color: var(--paper); }
+  .lb-q { background: rgba(26,107,107,0.2); }
+  .lb-q .lb-icon { background: rgba(26,107,107,0.3); color: #6ddacc; }
+  .lb-task { background: rgba(196,80,42,0.18); }
+  .lb-task .lb-icon { background: rgba(196,80,42,0.3); color: #f4a07a; }
+  .lb-tip { background: rgba(107,63,160,0.18); }
+  .lb-tip .lb-icon { background: rgba(107,63,160,0.3); color: #c9a4f5; }
+
+  .lab-dur-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-top: 22px;
+  }
+
+  /* ── CLOSE SECTION ── */
+  .close-section { background: var(--teal-light); padding: 64px 0; }
+
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 24px 0; }
+  .demo-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; padding: 20px; }
+  .demo-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .demo-card-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .demo-card-list li { font-size: 13.5px; color: var(--slate); padding-left: 18px; position: relative; }
+  .demo-card-list li span { position: absolute; left: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: rgba(247,243,236,0.35);
+    padding: 36px 48px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .06em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  footer span { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .phase-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .phase-divider::before, .phase-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .hero, .toc, .container { padding-left: 20px; padding-right: 20px; }
+    .spark-grid { grid-template-columns: 1fr; }
+    .infra-layer { grid-template-columns: 28px 1fr; }
+    .infra-layer-tools { grid-column: 1 / -1; }
+    .agenda-row { grid-template-columns: 1fr; gap: 4px; }
+    .agenda-dur { text-align: left; }
+    .spectrum { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<header class="hero">
+  <div class="hero-brand">
+    <span class="hero-brand-name">ProductLab with JT</span>
+    <span class="hero-brand-sep"></span>
+    <span class="hero-brand-sub">Powered by Product Slice HQ · Joshua Theophilus</span>
+  </div>
+  <div class="hero-eyebrow">Participant Guide · Edition 01 · Saturday, April 2026</div>
+  <h1>From Idea to <span>Live Product</span><br>in One Day</h1>
+  <p class="hero-sub">A hands-on workshop for product managers, designers & marketers. You will leave with a live URL — not just notes.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Workshop</span>
+      <span class="hero-meta-value">ProductLab with JT · Edition 01</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Time</span>
+      <span class="hero-meta-value">1:00 PM – 7:40 PM</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Format</span>
+      <span class="hero-meta-value">3 Phases + 3 Labs</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Facilitator</span>
+      <span class="hero-meta-value">Joshua Theophilus</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="toc">
+  <a href="#agenda">Agenda</a>
+  <a href="#tools">Tools</a>
+  <a href="#phase1">Phase 1</a>
+  <a href="#phase2">Phase 2</a>
+  <a href="#phase3">Phase 3</a>
+  <a href="#laba">Lab A</a>
+  <a href="#labb">Lab B</a>
+  <a href="#labc">Lab C</a>
+  <a href="#close">Close</a>
+</nav>
+
+
+<!-- ═══════ AGENDA ═══════ -->
+<section class="section" id="agenda">
+  <div class="container">
+    <div class="section-eyebrow">Day Flow</div>
+    <h2 class="section-title">Today at a Glance</h2>
+    <p class="section-desc">Six hours of content. Three breaks. Three live builds. One goal — you ship something real today.</p>
+
+    <div class="role-grid" style="margin-bottom:36px;">
+      <div class="role-card">
+        <div class="role-card-label" style="color:#1A6B6B;">Product Managers</div>
+        <div class="role-card-body">Prototype and validate ideas independently — without waiting on engineering.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-card-label" style="color:#6B3FA0;">Product Designers</div>
+        <div class="role-card-body">Go from design intent to live, interactive, data-connected products.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-card-label" style="color:#C4502A;">Product Marketers</div>
+        <div class="role-card-body">Build your own GTM assets, landing pages, and analytics — own your execution.</div>
+      </div>
+    </div>
+
+    <div class="agenda-row"><span class="agenda-time">1:00 – 1:30 PM</span><span class="agenda-label">Phase 1 — The Mental Model & Tool Stack</span><span class="agenda-dur">30 min</span></div>
+    <div class="agenda-row"><span class="agenda-time">1:30 – 2:00 PM</span><span class="agenda-label">Phase 2 — Idea to Architecture: The OCP Framework</span><span class="agenda-dur">30 min</span></div>
+    <div class="agenda-row"><span class="agenda-time">2:00 – 2:30 PM</span><span class="agenda-label">Phase 3 — The Invisible Stack: Infrastructure, Monitoring & Payments</span><span class="agenda-dur">30 min</span></div>
+    <div class="agenda-row brk"><span class="agenda-time">2:30 – 2:40 PM</span><span class="agenda-label">☕ Break</span><span class="agenda-dur">10 min</span></div>
+    <div class="agenda-row lab"><span class="agenda-time">2:40 – 4:10 PM</span><span class="agenda-label">Lab A — Lovable: AI Startup Directory</span><span class="agenda-dur">90 min</span></div>
+    <div class="agenda-row brk"><span class="agenda-time">4:10 – 4:20 PM</span><span class="agenda-label">☕ Break</span><span class="agenda-dur">10 min</span></div>
+    <div class="agenda-row lab"><span class="agenda-time">4:20 – 5:50 PM</span><span class="agenda-label">Lab B — Google AI Studio + Stitch + Firebase: Smart Feedback Collector</span><span class="agenda-dur">90 min</span></div>
+    <div class="agenda-row brk"><span class="agenda-time">5:50 – 6:00 PM</span><span class="agenda-label">☕ Break</span><span class="agenda-dur">10 min</span></div>
+    <div class="agenda-row lab"><span class="agenda-time">6:00 – 7:30 PM</span><span class="agenda-label">Lab C — Claude Code (GTM Planner) + Adalo (Booking App)</span><span class="agenda-dur">90 min</span></div>
+    <div class="agenda-row"><span class="agenda-time">7:30 – 7:40 PM</span><span class="agenda-label">Demo Day + Wrap-up</span><span class="agenda-dur">Close ~7:40 PM</span></div>
+  </div>
+</section>
+
+
+<!-- ═══════ TOOL STACK ═══════ -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-eyebrow">Arsenal</div>
+    <h2 class="section-title">The Full Tool Stack</h2>
+    <p class="section-desc">Every tool we cover today — and a few to explore on your own after the workshop.</p>
+
+    <div class="tool-section-label">Idea Validation & Venture OS</div>
+    <div class="tool-grid">
+      <div class="tool-card" style="border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.05);">
+        <div class="tool-card-name" style="color:var(--gold);">Product Nerve AI</div>
+        <div class="tool-card-cat">Venture Operating System · productnerve.com</div>
+        <div class="tool-card-desc">Validate your idea before you build it. Run your concept through Product Nerve to stress-test assumptions and sharpen your OCP canvas. <strong>Do this before Lab A.</strong></div>
+      </div>
+    </div>
+
+    <div class="tool-section-label">No-Code / Low-Code Build</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Lovable</div><div class="tool-card-cat">Full-Stack Builder</div><div class="tool-card-desc">Prompt-to-app. React frontend + Supabase backend. Ship in under an hour.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Adalo</div><div class="tool-card-cat">Mobile App Builder</div><div class="tool-card-desc">Drag-and-drop native mobile apps for iOS & Android. No code required.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Google AI Studio</div><div class="tool-card-cat">AI Prototyping</div><div class="tool-card-desc">Gemini-powered app experimentation. Test ideas with AI as a core feature.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Stitch by Google</div><div class="tool-card-cat">Design-to-Code</div><div class="tool-card-desc">AI design tool that generates real HTML/CSS/React code from your design intent.</div></div>
+    </div>
+
+    <div class="tool-section-label">AI-Assisted Code Development</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Claude Code</div><div class="tool-card-cat">Agentic Coding · Desktop App</div><div class="tool-card-desc">Describe what you want — Claude builds it. Used today via the Desktop App.</div></div>
+      <div class="tool-card explore"><div class="tool-card-name">Cursor</div><div class="tool-card-cat">AI-Powered IDE</div><div class="tool-card-desc">VS Code fork with AI autocomplete and codebase-wide generation.</div><div class="explore-badge">Explore after</div></div>
+      <div class="tool-card explore"><div class="tool-card-name">Windsurf</div><div class="tool-card-cat">AI-Powered IDE</div><div class="tool-card-desc">Agentic IDE from Codeium. Writes and runs multi-step changes autonomously.</div><div class="explore-badge">Explore after</div></div>
+      <div class="tool-card explore"><div class="tool-card-name">Google Antigravity</div><div class="tool-card-cat">AI App Builder</div><div class="tool-card-desc">Build functional web apps from natural language prompts.</div><div class="explore-badge">Explore after</div></div>
+      <div class="tool-card explore"><div class="tool-card-name">Replit</div><div class="tool-card-cat">Browser-Based Dev</div><div class="tool-card-desc">Build and deploy entirely in-browser. Great for quick iterations.</div><div class="explore-badge">Explore after</div></div>
+      <div class="tool-card explore"><div class="tool-card-name">OpenAI Codex</div><div class="tool-card-cat">AI Code Agent</div><div class="tool-card-desc">OpenAI's coding agent. Reads, writes, and tests code autonomously.</div><div class="explore-badge">Explore after</div></div>
+    </div>
+
+    <div class="tool-section-label">Dev Environment & Version Control</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">VS Code</div><div class="tool-card-cat">Code Editor</div><div class="tool-card-desc">Industry-standard editor. Integrates with Claude Code, Cursor, and every AI dev tool.</div></div>
+      <div class="tool-card"><div class="tool-card-name">GitHub</div><div class="tool-card-cat">Version Control</div><div class="tool-card-desc">Where your code lives. Triggers auto-deploys to Vercel on every push.</div></div>
+    </div>
+
+    <div class="tool-section-label">Backend & Infrastructure</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Supabase</div><div class="tool-card-cat">Database + Auth + Storage</div><div class="tool-card-desc">Postgres DB, auth, storage, realtime — all managed, free to start.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Firebase</div><div class="tool-card-cat">Google Backend</div><div class="tool-card-desc">Google's real-time database and auth. No server required.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Vercel</div><div class="tool-card-cat">Frontend Deployment</div><div class="tool-card-desc">Push-to-deploy hosting. Every Git push auto-deploys.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Railway</div><div class="tool-card-cat">Backend Deployment</div><div class="tool-card-desc">Deploy APIs and services. No DevOps required.</div></div>
+    </div>
+
+    <div class="tool-section-label">Email</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Resend</div><div class="tool-card-cat">Transactional Email</div><div class="tool-card-desc">3,000 emails/month free. Your first 3,000 users covered.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Zeptomail</div><div class="tool-card-cat">Bulk Email</div><div class="tool-card-desc">Cost-effective transactional email. Excellent for African deployments.</div></div>
+    </div>
+
+    <div class="tool-section-label">Monitoring & Error Tracking</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Sentry</div><div class="tool-card-cat">Error Monitoring</div><div class="tool-card-desc">Real-time bug tracking. Catch issues before your users do.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Uptime Robot</div><div class="tool-card-cat">Uptime Monitoring</div><div class="tool-card-desc">Alerts you the second your product goes down. Free tier sufficient.</div></div>
+    </div>
+
+    <div class="tool-section-label">Product Analytics</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">PostHog</div><div class="tool-card-cat">Product Analytics</div><div class="tool-card-desc">Open-source. Session recordings, funnels, heatmaps, feature flags.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Plausible</div><div class="tool-card-cat">Privacy-First Analytics</div><div class="tool-card-desc">Lightweight, GDPR-friendly. No cookies, no consent banners.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Mixpanel</div><div class="tool-card-cat">Behavioural Analytics</div><div class="tool-card-desc">Event-based tracking for retention, funnels, and cohort analysis.</div></div>
+    </div>
+
+    <div class="tool-section-label">Marketing & Ad Analytics</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Meta Pixel + CAPI</div><div class="tool-card-cat">Meta Ad Tracking</div><div class="tool-card-desc">Browser + server-side tracking. Closes the iOS attribution gap.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Google Analytics 4</div><div class="tool-card-cat">Web Analytics</div><div class="tool-card-desc">GA4 event-based model. Cross-platform tracking in one property.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Google Tag Manager</div><div class="tool-card-cat">Tag Management</div><div class="tool-card-desc">Deploy all tracking tags without touching code every time.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Google Ads Manager</div><div class="tool-card-cat">Paid Acquisition</div><div class="tool-card-desc">Search & display campaigns. Connect to GA4 + GTM for attribution.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Social Ads Tracking</div><div class="tool-card-cat">UTM + Attribution</div><div class="tool-card-desc">UTM parameters across LinkedIn, X, TikTok. Track source to revenue.</div></div>
+    </div>
+
+    <div class="tool-section-label">Payments</div>
+    <div class="tool-grid">
+      <div class="tool-card"><div class="tool-card-name">Stripe</div><div class="tool-card-cat">Global Payments</div><div class="tool-card-desc">Best-in-class for US/EU. Subscriptions, one-time, invoicing.</div></div>
+      <div class="tool-card"><div class="tool-card-name">Paystack</div><div class="tool-card-cat">African Payments</div><div class="tool-card-desc">Card, bank transfer, USSD, mobile money. Built for African markets.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ PHASE 1 ═══════ -->
+<section class="section" id="phase1">
+  <div class="container">
+    <div class="section-eyebrow">Phase 1 · 1:00 – 1:30 PM</div>
+    <h2 class="section-title">The Mental Model</h2>
+    <p class="section-desc">Before we touch any tool — we align on how to think.</p>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">01</div>
+        <div class="phase-header-text">
+          <h3>The Leverage Shift</h3>
+          <p>Why you're more powerful than you think</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="concept">The engineering bottleneck is a myth you've accepted as fixed reality. AI has handed non-engineers a superpower — most people aren't using it. That changes today.</div>
+        <div class="interactive-block block-q">
+          <span class="block-icon">Question</span>
+          <span class="block-text"><em>If you could ship a product this weekend — what would you build?</em></span>
+        </div>
+        <ul class="key-points">
+          <li>You don't need to write code to ship a real product in 2025</li>
+          <li>The bottleneck is no longer engineering — it's imagination and execution speed</li>
+          <li>Today you leave as a builder, not just a thinker</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">02</div>
+        <div class="phase-header-text">
+          <h3>The Spectrum: No-Code → AI-Code</h3>
+          <p>Pick your lane — or use all three</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="concept">There is no single right tool. There are three zones — and you choose the right one for the right job.</div>
+        <div class="spectrum">
+          <div class="spectrum-zone">
+            <div class="spectrum-zone-label">Zone 1</div>
+            <div class="spectrum-zone-title">No-Code</div>
+            <div class="spectrum-zone-tools">Lovable · Adalo<br>Describe it. AI builds it.<br>Zero syntax required.</div>
+          </div>
+          <div class="spectrum-zone">
+            <div class="spectrum-zone-label">Zone 2</div>
+            <div class="spectrum-zone-title">Low-Code</div>
+            <div class="spectrum-zone-tools">AI Studio · Stitch · Firebase<br>Guide and configure.<br>Some logic, more control.</div>
+          </div>
+          <div class="spectrum-zone">
+            <div class="spectrum-zone-label">Zone 3</div>
+            <div class="spectrum-zone-title">AI-Code</div>
+            <div class="spectrum-zone-tools">Claude Code · Cursor · Windsurf<br>You direct, AI writes.<br>You review and approve.</div>
+          </div>
+        </div>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">You don't need to choose one zone forever. The best builders use all three depending on what they're trying to achieve and how fast they need to move.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">03</div>
+        <div class="phase-header-text">
+          <h3>What "Shipped" Actually Means</h3>
+          <p>The only output that counts</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <ul class="key-points">
+          <li>A live URL someone else can open and use — that is a shipped product</li>
+          <li>Minimum viable: one problem solved, one user action possible, one data point captured</li>
+          <li>The startup loop: <strong>Build → Measure → Learn → Repeat</strong></li>
+          <li>The failure mode: over-engineering before validating a single assumption</li>
+        </ul>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text"><strong>Your mantra for today: "Live beats perfect."</strong> A working URL that does one thing is worth more than a 40-slide deck about a product that doesn't exist.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">04</div>
+        <div class="phase-header-text">
+          <h3>Why This Matters for Your Role</h3>
+          <p>The specific unlock for each of you</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="interactive-block block-q">
+          <span class="block-icon">Question</span>
+          <span class="block-text"><em>What's one thing you've had to wait for engineering to build in the last 6 months?</em></span>
+        </div>
+        <div class="role-grid" style="margin-top:16px;">
+          <div class="role-card">
+            <div class="role-card-label" style="color:#1A6B6B;">Product Managers</div>
+            <div class="role-card-body">Prototype before writing a PRD. Validate assumptions in days. Stop guessing what users want — show them something real.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-label" style="color:#6B3FA0;">Designers</div>
+            <div class="role-card-body">Your Figma frames become real, clickable, data-connected products. No more translation loss in handoff.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-label" style="color:#C4502A;">Marketers</div>
+            <div class="role-card-body">Your campaign ideas stop waiting in a dev queue. Build, A/B test, and iterate your own GTM assets — today.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">05</div>
+        <div class="phase-header-text">
+          <h3>The Full Stack — Five Layers</h3>
+          <p>Everything you need to go from zero to live</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="infra-layers">
+          <div class="infra-layer" style="background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.35);"><div class="infra-layer-num" style="color:var(--gold);">0</div><div class="infra-layer-name">Validate</div><div class="infra-layer-tools">Product Nerve AI — productnerve.com — validate your idea before you open any build tool</div></div>
+          <div class="infra-layer"><div class="infra-layer-num">1</div><div class="infra-layer-name">Build</div><div class="infra-layer-tools">Lovable · Adalo · Stitch · Google Antigravity · Claude Code · Cursor · Windsurf · Replit · OpenAI Codex</div></div>
+          <div class="infra-layer"><div class="infra-layer-num">2</div><div class="infra-layer-name">Dev Environment</div><div class="infra-layer-tools">VS Code · GitHub</div></div>
+          <div class="infra-layer"><div class="infra-layer-num">3</div><div class="infra-layer-name">Backend</div><div class="infra-layer-tools">Supabase · Firebase · Vercel · Railway</div></div>
+          <div class="infra-layer"><div class="infra-layer-num">4</div><div class="infra-layer-name">Delivery</div><div class="infra-layer-tools">Resend · Zeptomail · Stripe · Paystack</div></div>
+          <div class="infra-layer"><div class="infra-layer-num">5</div><div class="infra-layer-name">Intelligence</div><div class="infra-layer-tools">PostHog · Plausible · GA4 · GTM · Meta CAPI · Mixpanel · Sentry · Uptime Robot</div></div>
+        </div>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">You can wire all five layers together this weekend. For free — or near-free. The tools we cover today: <strong>Lovable, Claude Code (Desktop), Google AI Studio, Stitch, Firebase, Supabase, Adalo</strong>. Tools marked "Explore after" are introduced briefly today — resources go out via Product Slice HQ post-workshop.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════ PHASE 2 ═══════ -->
+<section class="section" id="phase2">
+  <div class="container">
+    <div class="section-eyebrow">Phase 2 · 1:30 – 2:00 PM</div>
+    <h2 class="section-title">Idea to Architecture</h2>
+    <p class="section-desc">How to think before you build. Turn a fuzzy idea into a concrete, buildable spec — in 10 minutes.</p>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">06</div>
+        <div class="phase-header-text">
+          <h3>The OCP Framework</h3>
+          <p>One Customer Problem — 12 decisions, zero waffling</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="concept">Before you open any tool, you complete the OCP. Twelve "ones" — each forces a single, clear decision. When all twelve align, you have something worth building.</div>
+
+        <div class="ocp-grid">
+          <div class="ocp-card"><div class="ocp-num">01</div><div class="ocp-title">Customer Problem</div><div class="ocp-desc">The single most painful problem your target user faces today</div></div>
+          <div class="ocp-card"><div class="ocp-num">02</div><div class="ocp-title">Solution</div><div class="ocp-desc">Your product's answer — one sentence, no ands, no buts</div></div>
+          <div class="ocp-card"><div class="ocp-num">03</div><div class="ocp-title">Value Proposition</div><div class="ocp-desc">Why a user picks you over doing nothing — the tangible outcome</div></div>
+          <div class="ocp-card"><div class="ocp-num">04</div><div class="ocp-title">Killer Feature</div><div class="ocp-desc">The one capability that makes users try — and tell others</div></div>
+          <div class="ocp-card"><div class="ocp-num">05</div><div class="ocp-title">Monetisation Model</div><div class="ocp-desc">How this makes money — subscription, one-time, marketplace, freemium</div></div>
+          <div class="ocp-card"><div class="ocp-num">06</div><div class="ocp-title">Core User Segment</div><div class="ocp-desc">The one type of person you build for first — be precise, not broad</div></div>
+          <div class="ocp-card"><div class="ocp-num">07</div><div class="ocp-title">Key Strategy</div><div class="ocp-desc">Your primary growth lever — virality, SEO, partnerships, community, outbound</div></div>
+          <div class="ocp-card"><div class="ocp-num">08</div><div class="ocp-title">Key Channel</div><div class="ocp-desc">Where your users already live — LinkedIn, WhatsApp, X, communities, email</div></div>
+          <div class="ocp-card"><div class="ocp-num">09</div><div class="ocp-title">Key Metric</div><div class="ocp-desc">The one number that tells you the product is working</div></div>
+          <div class="ocp-card"><div class="ocp-num">10</div><div class="ocp-title">Unfair Advantage</div><div class="ocp-desc">What you have that a competitor cannot easily copy</div></div>
+          <div class="ocp-card"><div class="ocp-num">11</div><div class="ocp-title">Retention Hook</div><div class="ocp-desc">Why users come back — habit, lock-in, community, or ongoing value</div></div>
+          <div class="ocp-card special"><div class="ocp-num">12</div><div class="ocp-title">Growth Loop</div><div class="ocp-desc">How the product grows itself — referrals, SEO, viral sharing, network effects</div></div>
+        </div>
+
+        <div class="interactive-block block-task" style="margin-top:16px;">
+          <span class="block-icon">Task</span>
+          <span class="block-text"><strong>10 minutes.</strong> Complete your OCP canvas for the idea you want to build today. One answer per box. No paragraphs — one sentence maximum. You'll use this in Lab A.</span>
+        </div>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">Before Lab A starts, go to <strong>Product Nerve AI — productnerve.com</strong> and run your completed OCP through it. It's a Venture Operating System built to stress-test founder ideas. The validation output will sharpen every build decision you make today.</span>
+        </div>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">If you can't answer all twelve in 10 minutes, the idea needs more thinking — not more building. That's the whole point of the OCP.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">07</div>
+        <div class="phase-header-text">
+          <h3>The SPARK Framework</h3>
+          <p>How to write prompts that actually build what you want</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="concept">The quality of what you build with AI = the quality of your prompt. SPARK is your structure every time you open Lovable, Claude Code, or AI Studio.</div>
+        <div class="spark-grid">
+          <div class="spark-card"><div class="spark-letter">S</div><div class="spark-content"><div class="spark-label">Scope</div><div class="spark-title">What are you building?</div><div class="spark-desc">App? Landing page? Dashboard? API? Be specific about the type of output.</div></div></div>
+          <div class="spark-card"><div class="spark-letter">P</div><div class="spark-content"><div class="spark-label">Persona</div><div class="spark-title">Who is the user?</div><div class="spark-desc">What do they need to accomplish? What problem are they solving?</div></div></div>
+          <div class="spark-card"><div class="spark-letter">A</div><div class="spark-content"><div class="spark-label">Actions</div><div class="spark-title">What can users do?</div><div class="spark-desc">Name the 3 key things a user must be able to do in this product.</div></div></div>
+          <div class="spark-card"><div class="spark-letter">R</div><div class="spark-content"><div class="spark-label">Result</div><div class="spark-title">What happens next?</div><div class="spark-desc">What does the system do when the user completes each action?</div></div></div>
+          <div class="spark-card"><div class="spark-letter">K</div><div class="spark-content"><div class="spark-label">Keep Out</div><div class="spark-title">What should this NOT do?</div><div class="spark-desc">Scope limits are as important as scope itself. Name what's excluded.</div></div></div>
+        </div>
+        <div class="interactive-block block-task">
+          <span class="block-icon">Task</span>
+          <span class="block-text"><strong>Write your SPARK prompt</strong> for the product you want to build in Lab A today. You'll paste this directly into Lovable when we start.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">08</div>
+        <div class="phase-header-text">
+          <h3>Your Role, Your Build Strategy</h3>
+          <p>Same tools — different outputs</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="role-grid">
+          <div class="role-card">
+            <div class="role-card-label" style="color:#1A6B6B;">Product Managers</div>
+            <div class="role-card-body">Build a hypothesis-testing prototype — not a PRD. Share the live URL with 10 users before the next sprint. Let data write the spec.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-label" style="color:#6B3FA0;">Designers</div>
+            <div class="role-card-body">Use Stitch to turn design intent into real code. Share a working URL instead of a Figma link. Let users click on real things.</div>
+          </div>
+          <div class="role-card">
+            <div class="role-card-label" style="color:#C4502A;">Marketers</div>
+            <div class="role-card-body">Build your campaign landing page with email capture, UTM tracking, and a live signups counter. Own the full GTM stack — no dev needed.</div>
+          </div>
+        </div>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">Every role has one common output measure: a live URL. If it doesn't have a URL, it hasn't shipped.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════ PHASE 3 ═══════ -->
+<section class="section" id="phase3">
+  <div class="container">
+    <div class="section-eyebrow">Phase 3 · 2:00 – 2:30 PM</div>
+    <h2 class="section-title">The Invisible Stack</h2>
+    <p class="section-desc">The infrastructure that determines whether your product survives real users.</p>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">09</div>
+        <div class="phase-header-text">
+          <h3>Infrastructure Is the Product</h3>
+          <p>What keeps your product alive after launch</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <div class="concept">The product that dies after 100 users wasn't ready — the infrastructure was missing. Today's tools make production-ready the default, not a milestone you reach later.</div>
+        <ul class="key-points">
+          <li><strong>Database:</strong> Where your data lives — Supabase or Firebase. Real databases, free to start.</li>
+          <li><strong>Auth:</strong> How users log in — email, Google, magic links. Built into Supabase and Firebase.</li>
+          <li><strong>Email:</strong> Confirmations, resets, receipts — Resend or Zeptomail. Set it up once.</li>
+          <li><strong>Monitoring:</strong> Sentry catches errors. Uptime Robot alerts you when your product goes down.</li>
+          <li><strong>Analytics:</strong> PostHog tracks behaviour. GA4 + GTM manage all your tracking tags.</li>
+          <li><strong>Payments:</strong> Stripe for global, Paystack for African markets. Add it from day one.</li>
+        </ul>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">A founder's payment page broke for 48 hours — they lost 40 signups before noticing. Sentry + Uptime Robot cost nothing to set up and would have caught it in minutes.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">10</div>
+        <div class="phase-header-text">
+          <h3>Supabase in 60 Seconds</h3>
+          <p>Your backend — without a backend engineer</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <ul class="key-points">
+          <li><strong>Database:</strong> Postgres tables — looks like Airtable. You already know how to use this.</li>
+          <li><strong>Auth:</strong> Email/password, Google OAuth, magic links — zero extra code needed</li>
+          <li><strong>Storage:</strong> File uploads (images, PDFs, documents) with access controls</li>
+          <li><strong>Realtime:</strong> Live updates across all users — no WebSocket code required</li>
+        </ul>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">Lovable connects to Supabase in one click. Your data lives in a real database from the very first prompt.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">11</div>
+        <div class="phase-header-text">
+          <h3>Analytics, Marketing & Payments</h3>
+          <p>Track everything. Charge from day one.</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <ul class="key-points">
+          <li><strong>PostHog / GA4:</strong> Track activation (did the user do the core action?) and retention (did they come back?)</li>
+          <li><strong>GTM:</strong> Manages all your tracking tags — Meta Pixel, GA4, custom events — from one place, without touching code every time</li>
+          <li><strong>Meta Pixel + CAPI:</strong> Browser + server-side tracking. Closes the iOS attribution gap for all paid social campaigns</li>
+          <li><strong>UTM parameters:</strong> Tag every link — LinkedIn, X, WhatsApp, email — so you know exactly which channel drove each signup</li>
+          <li><strong>Stripe / Paystack:</strong> Add payment on day one. Even if free, having the payment infrastructure signals serious intent</li>
+        </ul>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">Don't measure everything. Measure the one number that tells you users are getting value from your product. For most early-stage products that's activation — did the user complete the core action?</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-block-header">
+        <div class="phase-num">12</div>
+        <div class="phase-header-text">
+          <h3>Deploy: Localhost to Live in 3 Minutes</h3>
+          <p>The moment you hand someone a URL — you become a founder</p>
+        </div>
+      </div>
+      <div class="phase-block-body">
+        <ul class="key-points">
+          <li>Lovable deploys to Vercel by default — one click, live URL, done</li>
+          <li>Custom domain: ~$10/year on Namecheap → point DNS to Vercel → live in 5 minutes</li>
+          <li>Backend services go on Railway — same push-to-deploy simplicity</li>
+          <li>GitHub is your safety net — every change tracked, every deploy triggered automatically</li>
+        </ul>
+        <div class="interactive-block block-tip">
+          <span class="block-icon">Tip</span>
+          <span class="block-text">The moment you hand someone your URL — that's when you become a founder. You're about to do that. Labs start in 10 minutes.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════ LABS ═══════ -->
+<section class="labs-section" id="laba">
+  <div class="container">
+    <div class="section-eyebrow">Labs · 2:40 – 7:30 PM</div>
+    <h2 class="section-title">Three Labs. One Goal: Ship.</h2>
+    <p class="section-desc">90 minutes each. 10-minute breaks between each lab. You build something real in every session.</p>
+
+    <!-- LAB A -->
+    <div class="lab-card">
+      <div class="lab-card-eyebrow">Lab A · 2:40 – 4:10 PM · 90 minutes</div>
+      <div class="lab-card-title">Lovable: AI Startup Directory</div>
+      <div class="lab-card-tagline">We build the platform together — then you list your idea on it.</div>
+
+      <div class="lab-section-label">What We're Building</div>
+      <ul class="lab-list">
+        <li>A live, public <strong>AI-Assisted Startup Directory</strong> — a real platform where today's ideas are submitted, browsed, and spotlighted</li>
+        <li>Homepage with a browsable card grid — filterable by category, tool used, and stage</li>
+        <li>Submit page — name, idea title, problem solved, tool used, live URL, one-liner pitch</li>
+        <li>Each submission gets its own public detail page showing the full OCP breakdown</li>
+        <li>A "Featured by JT" spotlight badge — awarded post-workshop to the best submissions</li>
+        <li>Supabase backend — all ideas stored in a real database, visible in real time</li>
+        <li>Resend confirmation — every submitter gets a branded email when their idea goes live</li>
+        <li>PostHog analytics — tracking visits and submissions from day one</li>
+        <li>Deployed to Vercel — live and shareable before the session ends</li>
+      </ul>
+
+      <div class="lab-section-label">Step-by-Step</div>
+      <ul class="step-list">
+        <li><span class="step-time">0:00</span>SPARK prompt — write and run the Lovable prompt for the full directory. Watch the first version appear.</li>
+        <li><span class="step-time">0:08</span>Iterate — refine the card layout, fix the submission form fields to match the OCP structure.</li>
+        <li><span class="step-time">0:25</span>Connect Supabase — create the ideas table. Enable admin auth.</li>
+        <li><span class="step-time">0:40</span>Wire Resend — submission confirmation email fires automatically on every new entry.</li>
+        <li><span class="step-time">0:50</span>Add PostHog snippet. Deploy to Vercel. Test the full submission flow.</li>
+        <li><span class="step-time">1:00</span>Open submissions — every participant fills in and submits their OCP idea live.</li>
+        <li><span class="step-time">1:20</span>Browse together. JT announces which ideas will receive the post-workshop spotlight.</li>
+      </ul>
+
+      <div class="lab-block lb-task">
+        <span class="lb-icon">Task</span>
+        <span class="lb-text"><strong>Before this lab starts:</strong> have your completed OCP canvas ready. You'll be submitting it to the live directory before the session ends.</span>
+      </div>
+      <div class="lab-block lb-tip">
+        <span class="lb-icon">Tip</span>
+        <span class="lb-text">Don't wait for the product to be "perfect" before submitting your idea. A rough OCP that's honest is more valuable than a polished one that's vague.</span>
+      </div>
+
+      <div class="lab-dur-badge">⏱ 90 min · No-code · All skill levels</div>
+    </div>
+
+    <!-- LAB B -->
+    <div class="lab-card" id="labb">
+      <div class="lab-card-eyebrow">Lab B · 4:20 – 5:50 PM · 90 minutes</div>
+      <div class="lab-card-title">Google AI Studio + Stitch + Firebase</div>
+      <div class="lab-card-tagline">Design-first, AI-powered — three Google tools, one complete product.</div>
+
+      <div class="lab-section-label">What We're Building</div>
+      <ul class="lab-list">
+        <li><strong>Smart Feedback Collector</strong> — users submit product feedback, Gemini AI categorises it by theme and sentiment, results render live in a dashboard</li>
+        <li>Submission screen: clean form UI built and exported from Stitch — real code, not a mockup</li>
+        <li>Gemini AI layer: feedback → Gemini API → returns category tag + sentiment score</li>
+        <li>Firebase Firestore: all submissions + AI results stored and streamed in real time</li>
+        <li>Dashboard: live feed of categorised feedback with visual sentiment breakdown</li>
+        <li>Google Antigravity: introduced as an alternate build path to explore after the workshop</li>
+      </ul>
+
+      <div class="lab-section-label">Step-by-Step</div>
+      <ul class="step-list">
+        <li><span class="step-time">0:00</span>Define the 3 core screens: Submit Feedback, Thank You, Dashboard.</li>
+        <li><span class="step-time">0:10</span>Use Stitch to generate all three screens. Export the code. Review the structure.</li>
+        <li><span class="step-time">0:30</span>Open Google AI Studio — create a Gemini prompt that returns category + sentiment as JSON. Test with live examples.</li>
+        <li><span class="step-time">0:50</span>Wire Gemini into the form: submit → call Gemini → store result in Firebase Firestore.</li>
+        <li><span class="step-time">1:05</span>Connect the dashboard to Firebase — real-time listener renders new submissions as they arrive.</li>
+        <li><span class="step-time">1:20</span>Quick Antigravity intro — what it is and where it fits as an alternative.</li>
+        <li><span class="step-time">1:25</span>Test the full flow end-to-end. Prep 2-min demo.</li>
+      </ul>
+
+      <div class="lab-block lb-q">
+        <span class="lb-icon">Question</span>
+        <span class="lb-text"><em>Where in your current workflow could an AI categorisation layer like this save you the most time?</em></span>
+      </div>
+      <div class="lab-block lb-tip">
+        <span class="lb-icon">Tip</span>
+        <span class="lb-text">Everything built in this lab is real code. Not a wireframe, not a prototype — deployable code generated by Stitch and powered by Gemini. You can take this and extend it after the workshop.</span>
+      </div>
+
+      <div class="lab-dur-badge">⏱ 90 min · Intermediate · Live build + follow-along</div>
+    </div>
+
+    <!-- LAB C -->
+    <div class="lab-card" id="labc">
+      <div class="lab-card-eyebrow">Lab C · 6:00 – 7:30 PM · 90 minutes</div>
+      <div class="lab-card-title">Claude Code + Adalo</div>
+      <div class="lab-card-tagline">Two builds in one lab — a web app via Claude Code Desktop, and a mobile app via Adalo.</div>
+
+      <div class="lab-section-label">Build 1 — GTM Campaign Planner (Claude Code · 50 min)</div>
+      <ul class="lab-list">
+        <li>A web app where you input your product details and receive a structured, shareable go-to-market campaign brief</li>
+        <li>Inputs: product name, target audience, key message, channels, campaign goal</li>
+        <li>Output: structured GTM brief — channel plan, messaging hierarchy, CTAs, success metrics — formatted as a downloadable doc</li>
+        <li>Supabase stores all campaigns. Resend emails the finished brief to the user automatically.</li>
+        <li>Built entirely through the Claude Desktop App — prompting every step, no terminal required</li>
+        <li>Deployed to Vercel via GitHub — live URL in under 50 minutes</li>
+      </ul>
+
+      <div class="lab-section-label">Build 1 — Step-by-Step</div>
+      <ul class="step-list">
+        <li><span class="step-time">0:00</span>Open Claude Desktop App. OCP the GTM Planner. Prompt Claude to scaffold the full project.</li>
+        <li><span class="step-time">0:08</span>Review file structure. Prompt auth: "Add Supabase email login and a protected dashboard."</li>
+        <li><span class="step-time">0:20</span>Prompt the core form: "Build a GTM brief form — product name, audience, key message, channels, goal. Save to Supabase."</li>
+        <li><span class="step-time">0:35</span>Prompt the output: "Generate a structured GTM doc from the form. Make it downloadable. Email it via Resend."</li>
+        <li><span class="step-time">0:45</span>Push to GitHub → deploy to Vercel. Live URL. Test the full flow.</li>
+      </ul>
+
+      <div class="lab-section-label">Build 2 — Booking & Appointment App (Adalo · 35 min)</div>
+      <ul class="lab-list">
+        <li>A native mobile app for iOS & Android — service listing, date/time picker, booking confirmation, appointment history</li>
+        <li>Built in Adalo's visual editor — no code written at all</li>
+        <li>Embeddable booking widget: Adalo generates a web snippet you can drop into any website, Notion page, or platform</li>
+        <li>Use case: any service business — consultant, coach, clinic — can take bookings without a custom dev build</li>
+      </ul>
+
+      <div class="lab-section-label">Build 2 — Step-by-Step</div>
+      <ul class="step-list">
+        <li><span class="step-time">0:50</span>Create Adalo project. Set up collections: Services, Users, Bookings. Define relationships.</li>
+        <li><span class="step-time">1:00</span>Build core screens: Home (service list), Book (date/time + confirm), My Bookings. Link all screens.</li>
+        <li><span class="step-time">1:15</span>Enable auth. Test the full login and booking flow on mobile preview.</li>
+        <li><span class="step-time">1:20</span>Show the web embed snippet. Paste into a live page — demonstrate the booking flow embedded in a browser.</li>
+        <li><span class="step-time">1:25</span>Recap both builds. Prep 2-min demo.</li>
+      </ul>
+
+      <div class="lab-block lb-q">
+        <span class="lb-icon">Question</span>
+        <span class="lb-text"><em>Where in your current work could a structured GTM brief like this replace a document that currently takes hours to write?</em></span>
+      </div>
+      <div class="lab-block lb-tip">
+        <span class="lb-icon">Tip</span>
+        <span class="lb-text">You never wrote a single line of code in Build 1. You directed — Claude executed. Every prompt you wrote was a spec. That's the new workflow.</span>
+      </div>
+      <div class="lab-block lb-tip">
+        <span class="lb-icon">Tip</span>
+        <span class="lb-text">Adalo's embed feature means your mobile app is also a widget. One build, multiple surfaces. Drop it into your website, your client portal, your community — anywhere.</span>
+      </div>
+
+      <div class="lab-dur-badge">⏱ 90 min · Two live builds · Intermediate</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════ CLOSE ═══════ -->
+<section class="close-section" id="close">
+  <div class="container">
+    <div class="section-eyebrow">Close · 7:30 – 7:40 PM</div>
+    <h2 class="section-title" style="color:var(--ink);">Demo Day + Wrap-Up</h2>
+    <p class="section-desc" style="color:var(--muted);">Two minutes each. Show what you built. Tell us what's next.</p>
+
+    <div class="demo-grid">
+      <div class="demo-card">
+        <div class="demo-card-title">Your 2-Minute Demo</div>
+        <ul class="demo-card-list">
+          <li><span style="color:var(--gold);">1.</span> What problem did you solve?</li>
+          <li><span style="color:var(--gold);">2.</span> Show it working — on screen, live</li>
+          <li><span style="color:var(--gold);">3.</span> What would you build next?</li>
+        </ul>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-title">Recognition</div>
+        <ul class="demo-card-list">
+          <li><span>🏆</span> Best Problem-Solution Fit</li>
+          <li><span>⚡</span> Fastest Time to Live URL</li>
+          <li><span>✨</span> Most Creative Use of AI</li>
+        </ul>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-title">The 72-Hour Challenge</div>
+        <p style="font-size:13.5px;color:var(--slate);line-height:1.6;margin-top:6px;">Ship one more iteration within 72 hours. Post your live URL in the <strong>Product Slice HQ</strong> community. That's how the habit forms.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--ink);border-radius:4px;padding:28px 32px;margin-top:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Stay Connected</div>
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--paper);margin-bottom:8px;">Join Product Slice HQ</div>
+      <div style="font-size:14px;color:rgba(247,243,236,0.65);line-height:1.65;">Resources, templates, tool walkthroughs, and the next ProductLab with JT announcement — all in one place. This is where Edition 01 becomes Edition 02.</div>
+      <div style="margin-top:16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);line-height:1.9;">
+        🌐 <a href="https://www.joshuatheophilus.com" style="color:var(--gold);text-decoration:none;">www.joshuatheophilus.com</a> &nbsp;·&nbsp;
+        🌐 <a href="https://www.productslicehq.com" style="color:var(--gold);text-decoration:none;">www.productslicehq.com</a> &nbsp;·&nbsp;
+        ✉️ <a href="mailto:joshua.t@productslicehq.com" style="color:var(--gold);text-decoration:none;">joshua.t@productslicehq.com</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div><span>ProductLab with JT · Edition 01</span> · Powered by Product Slice HQ · A Rare Phronesis Limited Initiative</div>
+  <div>Joshua Theophilus · <span>www.joshuatheophilus.com</span> · <span>joshua.t@productslicehq.com</span></div>
+</footer>
+
+</body>
+</html>
